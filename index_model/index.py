@@ -85,8 +85,7 @@ class IndexModel:
         return df
 
     def _portfolio_performance(self) -> pd.DataFrame:
-        portfolioPerf={}
-        print(f"portfolio_return is {type(self.indexLvls.index[-1]-self.indexLvls.index[0])}")
+        portfolioPerf={}        
         diff_bw_first_and_last_index_dt = (self.indexLvls.index[-1]-self.indexLvls.index[0]).days
         portfolioPerf["Ann.Return"] = ((self.indexLvls.iloc[-1]/self.indexLvls.iloc[0])**(1/(365/diff_bw_first_and_last_index_dt))-1)*100
         portfolioPerf["Std.Dev"] = self.indexLvls.pct_change().dropna().std()*(252**0.5)*100
@@ -105,8 +104,7 @@ class IndexModel:
         # the code also generated an xlsx file which will have the securities' prices, rebal dates, rebal returns, weights, index levels
         startDt=self.indexLvls.head(1).index
         endDt=self.indexLvls.tail(1).index
-        excel_file = f"Index_Calculations_start-{pd.to_datetime(startDt)[0].strftime('%Y%m%d')}_end-{pd.to_datetime(endDt)[0].strftime('%Y%m%d')}.xlsx"
-        print(excel_file)
+        excel_file = f"Index_Calculations_start-{pd.to_datetime(startDt)[0].strftime('%Y%m%d')}_end-{pd.to_datetime(endDt)[0].strftime('%Y%m%d')}.xlsx"        
         xlwrite = pd.ExcelWriter(excel_file, engine='xlsxwriter')
         self.underlying_data.to_excel(xlwrite, sheet_name = "prices", index=True)
         self.rebalDates.rename("RebalDates").to_excel(xlwrite, sheet_name = "Rebal_Dates", index=False)
