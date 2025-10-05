@@ -6,7 +6,7 @@ class IndexModel:
     def __init__(self) -> None:
         # To be implemented
         root = Path(__file__).resolve().parents[1]
-        print(root)
+        print(f"\n{'='*100}\nOUTPUT LOCATION:-> {root}\n{'='*100}\n")
         prices_csv_file_location = root/"data_sources/stock_prices.csv"
         self.underlying_data=pd.read_csv(prices_csv_file_location, index_col="Date", parse_dates=['Date'], dayfirst=True).sort_index()
         self.underlyings=self.underlying_data.columns
